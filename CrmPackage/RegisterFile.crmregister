@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Register xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/crm/2011/tools/pluginregistration">
+  <Solutions>
+    <Solution Assembly="StudentManagementSystem.cfasms.dll" Id="b880b1d5-6986-4f09-b3e5-96a9004ff24c" IsolationMode="Sandbox" SourceType="Database">
+      <PluginTypes>
+        <clear />
+        <Plugin Description="Plug-in to On Create Assign Student College ID if enrolled." FriendlyName="On Create Assign Student College ID if enrolled." Name="StudentManagementSystem.cfasms.PostOperationcfasms_studenteducationhistoryCreate" Id="98cec578-ea49-45c3-aa74-6390b08db396" TypeName="StudentManagementSystem.cfasms.PostOperationcfasms_studenteducationhistoryCreate">
+          <Steps>
+            <clear />
+            <Step AsyncAutoDelete="false" Name="On Create Assign Student College ID if enrolled." Description="Assign unique enrollment ID from associated institution" Id="5a26c4e7-6141-ee11-bdf3-000d3a1b935c" ImpersonatingUserId="00000000-0000-0000-0000-000000000000" MessageName="Create" Mode="Synchronous" PrimaryEntityName="cfasms_studenteducationhistory" Rank="1" Stage="PostOutsideTransaction" SupportedDeployment="ServerOnly" MessageEntityId="00000000-0000-0000-0000-000000000000">
+              <Images />
+            </Step>
+          </Steps>
+        </Plugin>
+        <Plugin Description="Plug-in to Update of cfasms_studenteducationhistory" FriendlyName="Update of cfasms_studenteducationhistory" Name="StudentManagementSystem.cfasms.PostOperationcfasms_studenteducationhistoryUpdate" Id="7dea599b-ac3d-4320-8a53-298953759efc" TypeName="StudentManagementSystem.cfasms.PostOperationcfasms_studenteducationhistoryUpdate">
+          <Steps>
+            <clear />
+            <Step AsyncAutoDelete="false" Name="Update of cfasms_studenteducationhistory" Description="Update of cfasms_studenteducationhistory" FilteringAttributes="cfasms_institution,cfasms_iscurrentlyinprogress" Id="6f1967ab-7c41-ee11-bdf3-000d3a1b935c" ImpersonatingUserId="00000000-0000-0000-0000-000000000000" MessageName="Update" Mode="Synchronous" PrimaryEntityName="cfasms_studenteducationhistory" Rank="1" Stage="PostOutsideTransaction" SupportedDeployment="ServerOnly" MessageEntityId="00000000-0000-0000-0000-000000000000">
+              <Images />
+            </Step>
+          </Steps>
+        </Plugin>
+      </PluginTypes>
+    </Solution>
+  </Solutions>
+  <XamlWorkflows />
+  <DataProviders />
+</Register>
