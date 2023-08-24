@@ -74,16 +74,20 @@ namespace StudentManagementSystem.cfasms
                         return;
 
                     Entity postImage = (Entity)context.PostEntityImages["PostImage"];
-
-                    // Get the last entered student-college id for the assigned institution
+                   
                     // only do the work if currently enrolled
                     bool isCurrentlyInProgress = GetAttributeValue<bool>(studenteducationhistory, postImage, "cfasms_iscurrentlyinprogress");
-                    if (isCurrentlyInProgress)
+                    // only change the college student ID if instituion has changed.
+                    bool isDifferentInstitution = studenteducationhistory.Attributes.ContainsKey("cfasms_institution");
+                    // if there isn't an assigned college student ID assign it regardless
+                    bool isIdEmpty = string.IsNullOrEmpty(postImage.GetAttributeValue<string>("cfasms_name"));
+                    
+                    if (isCurrentlyInProgress && (isDifferentInstitution || isIdEmpty))
                     {
                         Guid studenteducationhistoryId = (Guid)studenteducationhistory["cfasms_studenteducationhistoryid"];
                         EntityReference universityReference = GetAttributeValue<EntityReference>(studenteducationhistory, postImage, "cfasms_institution");
 
-                        // Instantiate QueryExpression query
+                        // get the last entered student-college id for the assigned institution with query expression
                         var query = new QueryExpression("cfasms_studenteducationhistory")
                         {
                             TopCount = 1,
@@ -95,7 +99,7 @@ namespace StudentManagementSystem.cfasms
                                 {
                                     new ConditionExpression("cfasms_institution", ConditionOperator.Equal, universityReference.Id),
                                     new ConditionExpression("cfasms_name", ConditionOperator.NotNull),
-                                    new ConditionExpression("cfasms_name", ConditionOperator.NotEqual, "") 
+                                    new ConditionExpression("cfasms_name", ConditionOperator.NotEqual, "")
                                 }
                             },
                             Orders =
