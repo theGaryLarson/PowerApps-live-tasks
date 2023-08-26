@@ -81,8 +81,8 @@ namespace StudentManagementSystem.cfasms
                     bool isDifferentInstitution = studenteducationhistory.Attributes.ContainsKey("cfasms_institution");
                     // if there isn't an assigned college student ID assign it regardless
                     bool isIdEmpty = string.IsNullOrEmpty(postImage.GetAttributeValue<string>("cfasms_name"));
-                    
-                    if (isCurrentlyInProgress && (isDifferentInstitution || isIdEmpty))
+                    // must be in progress... case 1: institution or id is empty... case 2: institution changed but ID not empty
+                    if (isCurrentlyInProgress && ((isDifferentInstitution || isIdEmpty) || (!isDifferentInstitution && !isIdEmpty)))
                     {
                         Guid studenteducationhistoryId = (Guid)studenteducationhistory["cfasms_studenteducationhistoryid"];
                         EntityReference universityReference = GetAttributeValue<EntityReference>(studenteducationhistory, postImage, "cfasms_institution");
