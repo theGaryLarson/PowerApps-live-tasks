@@ -86,6 +86,7 @@ namespace StudentManagementSystem.cfasms
                     {
                         Guid studenteducationhistoryId = (Guid)studenteducationhistory["cfasms_studenteducationhistoryid"];
                         EntityReference universityReference = GetAttributeValue<EntityReference>(studenteducationhistory, postImage, "cfasms_institution");
+                        EntityReference studentReference = postImage.GetAttributeValue<EntityReference>("cfasms_student");
 
                         // get the last entered student-college id for the assigned institution with query expression
                         var query = new QueryExpression("cfasms_studenteducationhistory")
@@ -99,7 +100,8 @@ namespace StudentManagementSystem.cfasms
                                 {
                                     new ConditionExpression("cfasms_institution", ConditionOperator.Equal, universityReference.Id),
                                     new ConditionExpression("cfasms_name", ConditionOperator.NotNull),
-                                    new ConditionExpression("cfasms_name", ConditionOperator.NotEqual, "")
+                                    new ConditionExpression("cfasms_name", ConditionOperator.NotEqual, ""),
+                                    new ConditionExpression("cfasms_student", ConditionOperator.NotEqual, studentReference.Id)
                                 }
                             },
                             Orders =
